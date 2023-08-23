@@ -1,6 +1,6 @@
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './exception/exception.filter';
 
 async function bootstrap() {
@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
-
+  app.useGlobalPipes(new ValidationPipe());
   const { PORT } = process.env;
   await app.listen(PORT);
   Logger.log(`🚀 Running on ${PORT}`);
