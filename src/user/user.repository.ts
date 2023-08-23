@@ -1,19 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { PrismaService } from '../database/prisma.service';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './user.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class UserRepository {
-  private readonly User: PrismaService['user'];
-  constructor(private readonly prisma: PrismaService) {
-    this.User = prisma.user;
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+
+  async create(
+    createUserDto: CreateUserDto,
+  ): Promise<Omit<UserEntity, 'password'>> {
+    const { password: _, ...rest } = (
+      await this.userModel.create(createUserDto)
+    ).toObject();
+    return rest;
   }
 
-  async create(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
-    const { password: _, ...rest } = await this.User.create({
-      data: createUserDto,
-    });
-    return rest;
+  async findByUsername(username: string): Promise<User> {
+    return await this.userModel.findOne({ username });
   }
 }

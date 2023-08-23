@@ -44,13 +44,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
     };
 
     Logger.error({ error: exceptionRawObject, stack });
-    if (
-      exception.name === 'PrismaClientKnownRequestError' &&
-      exception.code === 'P2002'
-    ) {
-      // example of the field that comes inside the exception, from which we can know the
-      // key of the error: { meta: { target: '<Model-name>_name_key' }, ...restOfTheException }
-      const key = exception.meta.target.split('_')[1];
+
+    if (exception.name === 'MongoServerError' && exception.code === 11000) {
+      const key = Object.keys(exception.keyPattern)[0];
       const { statusCode, ...rest } = baseResponseBody;
       statusCode;
 

@@ -4,9 +4,10 @@ services:
   mongo:
     image: mongo
     restart: always
-    container_name: mongo_dashflow
+    container_name: mongo_vial
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: 123456
+      MONGO_INITDB_DATABASE: vial
     ports:
       - 12345:27017
