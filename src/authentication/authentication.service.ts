@@ -16,7 +16,8 @@ export class AuthenticationService {
 
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.userService.findByUsername(username);
-    if (!user || !user.password) throw new BadRequestException();
+    if (!user || !user.password)
+      throw new BadRequestException('User does not exist.');
 
     if (!(await bcrypt.compare(pass, user.password))) {
       throw new UnauthorizedException();
