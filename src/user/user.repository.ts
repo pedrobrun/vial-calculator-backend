@@ -18,7 +18,8 @@ export class UserRepository {
     return rest;
   }
 
-  async findByUsername(username: string): Promise<User> {
-    return (await this.userModel.findOne({ username })).toObject();
+  async findByUsername(username: string): Promise<User | undefined> {
+    const user = await this.userModel.findOne({ username });
+    return user ? user.toObject() : undefined;
   }
 }
