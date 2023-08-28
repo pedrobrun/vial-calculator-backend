@@ -3,13 +3,13 @@ import {
   Get,
   Post,
   Body,
-  Param,
   Request,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { CalculationsService } from './calculations.service';
 import { CreateCalculationDto } from './dto/create-calculation.dto';
-import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { AuthenticationGuard } from 'src/authentication/authentication.guard';
 
 @Controller('calculations')
 export class CalculationsController {
@@ -27,9 +27,17 @@ export class CalculationsController {
     );
   }
 
-  @Get(':date')
+  @Get()
   @UseGuards(AuthenticationGuard)
-  findOne(@Param('date') date: string, @Request() request) {
-    return this.calculationsService.findByUserAndDate(date, request.user.id);
+  findOne(
+    @Query('start') start: string,
+    @Query('end') end: string,
+    @Request() request,
+  ) {
+    return this.calculationsService.findByUserAndDate(
+      start,
+      end,
+      request.user.id || request.user._id,
+    );
   }
 }

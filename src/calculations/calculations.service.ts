@@ -15,7 +15,11 @@ export class CalculationsService {
     );
   }
 
-  async findByUserAndDate(date: string, userId: string) {
-    return await this.calculationsRepository.findByUserAndDate(date, userId);
+  async findByUserAndDate(start: string, end: string, userId: string) {
+    return await this.calculationsRepository.findByUserAndDate(
+      start,
+      end,
+      userId,
+    );
   }
 }

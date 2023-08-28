@@ -42,10 +42,16 @@ export class CalculationsRepository {
     return calculation.toObject();
   }
 
-  async findByUserAndDate(date: string, userId: string) {
-    return await this.calculationsModel.findOne({
-      createdAt: date,
-      userId,
-    });
+  async findByUserAndDate(start: string, end: string, userId: string) {
+    return await this.calculationsModel
+      .findOne({
+        userId,
+        createdAt: {
+          $gte: start,
+          $lte: end,
+        },
+      })
+      .select('operations')
+      .exec();
   }
 }
