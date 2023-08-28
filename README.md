@@ -12,9 +12,27 @@ NestJS encourages good architecture practices through its own built-in modularit
 
 ## Technologies Used
 
-- NestJS
-- Mongoose
+- NestJS (plus framework built-in stuff such as the validators for incoming data)
+- Mongoose/MongoDB
 - JWT for Authentication
+- Jest
+- Bcrypt for hashing
+
+## Module Structure
+
+Each module in the backend lives in its own folder, which contains various related files:
+
+- `*.module.ts`: The main module file that brings all the related code together.
+- `*.controller.ts`: Handles incoming requests and returns responses.
+- `*.service.ts`: Contains the business logic and calls the repository.
+- `*.repository.ts`: Directly interacts with the database.
+- `*.schema.ts`: Defines the Mongoose schema for the database collection.
+- `*.dto.ts`: Data Transfer Object - An object that carries data between processes.
+- `*.entity.ts`: A TypeScript class that defines the object and type structure for the database records.
+
+#### Why Use Entity?
+
+The `*.entity.ts` is particularly important because it defines the type returned by the repository layer model methods. By doing this, we avoid "leaking" database-specific types into other layers of the application, thereby reducing the coupling to the database provider.
 
 ## Configuration
 
