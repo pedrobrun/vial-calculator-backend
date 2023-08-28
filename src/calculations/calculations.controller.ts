@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { CalculationsService } from './calculations.service';
 import { CreateCalculationDto } from './dto/create-calculation.dto';
-import { AuthenticationGuard } from 'src/authentication/authentication.guard';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 @Controller('calculations')
 export class CalculationsController {
