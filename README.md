@@ -43,6 +43,7 @@ $ docker-compose up -d
 ```
 
 2. Rename `.env.example` to `.env`.
+3. To successfully run all the tests, you also have to add an `env.test` file, which can currently be a copy of the `.env.example`, that you renamed to `.env`.
 
 ## Installation
 
